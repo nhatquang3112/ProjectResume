@@ -28,7 +28,6 @@ class App extends Component {
     this.handleCommenterChange = this.handleCommenterChange.bind(this);
     this.submitComment = this.submitComment.bind(this);
 
-
   };
 
   componentDidMount() {
@@ -77,20 +76,34 @@ class App extends Component {
     })
   };
 
+
   render() {
 
     return (
       <div className="App">
-        <h1>{this.state.name}</h1>
         <h1>{this.state.currentComment}</h1>
         <h1>{this.state.currentCommenter}</h1>
-
 
         <span>Change your name below</span>
         <textarea value={this.state.currentComment} placeholder="comment" onChange={this.handleCommentChange} />
         <textarea value={this.state.currentCommenter} placeholder="commenter" onChange={this.handleCommenterChange} />
         <button onClick={this.submitComment}>Submit</button>
 
+        <span>Below is the comment list:</span>
+
+        {
+          this.state.commentList.map((comment, commentIndex) => (
+            <div class="commentCard">
+              <div class ="commentOwner">
+                <p>Name: {comment.owner}</p>
+              </div>
+              <div class ="commentContent">
+                <p>Content: {comment.content}</p>
+              </div>
+            </div>
+          ))
+        }
+        
       </div>
     );
   };
