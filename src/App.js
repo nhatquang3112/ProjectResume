@@ -61,15 +61,17 @@ class App extends Component {
   submitComment() {
     const commentListRef = db.collection('commentList');
     // send comment to database
-    var timeCreated = '' + new Date().getTime();
-    commentListRef.doc(timeCreated).set({
-      content: this.state.currentComment,
-      owner: this.state.currentCommenter,
-      id: timeCreated,
-    })
-    .then(() => {
-      console.log('Comment sent');
-    })
+    if (this.state.currentComment.length > 0) {
+      var timeCreated = '' + new Date().getTime();
+      commentListRef.doc(timeCreated).set({
+        content: this.state.currentComment,
+        owner: this.state.currentCommenter.length > 0 ? this.state.currentCommenter : 'Anonymous',
+        id: timeCreated,
+      })
+      .then(() => {
+        console.log('Comment sent');
+      })
+    }
 
     // reset currentComment
     this.setState({
@@ -82,10 +84,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>{this.state.currentComment}</h1>
-        <h1>{this.state.currentCommenter}</h1>
-
-        <div className="commentSection"> 
+        <div className="commentBox">
           <article class="media">
             <figure class="media-left">
               <p class="image is-64x64">
@@ -94,7 +93,6 @@ class App extends Component {
             </figure>
             <div class="media-content">
               <div class="field">
-                <label class="label">Name</label>
                 <div class="control">
                   <input class="input" type="text" placeholder="Type your name..."
                     value={this.state.currentCommenter} onChange={this.handleCommenterChange}
@@ -116,20 +114,30 @@ class App extends Component {
             </div>
           </article>
         </div>
-
-        {
-          this.state.commentList.map((comment, commentIndex) => (
-            <div class="commentCard">
-              <div class ="commentOwner">
-                <p>Name: {comment.owner}</p>
-              </div>
-              <div class ="commentContent">
-                <p>Content: {comment.content}</p>
-              </div>
-            </div>
-          ))
-        }
-
+        <div className="commentSection">
+          {
+            this.state.commentList.map((comment, commentIndex) => (
+              <article class="media">
+                <figure class="media-left">
+                  <p class="image is-64x64">
+                    <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+                  </p>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <p>
+                      <strong>{comment.owner}</strong>
+                      <br></br>
+                      {comment.content}
+                      <br></br>
+                      <small><a>Reply</a></small>
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
       </div>
     );
   };

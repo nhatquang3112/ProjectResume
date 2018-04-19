@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-logo {
@@ -22,10 +26,17 @@
   font-size: large;
 }
 
-.commentSection {
-  width: 300px;
+.commentBox {
+  width: 600px;
   display: flex;
   flex-direction: column;
+}
+.commentSection {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 @keyframes App-logo-spin {
