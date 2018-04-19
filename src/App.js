@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './bulma.css';
 import firebase from 'firebase'
+import Header from './components/Header';
+import VideoPlayer from './components/VideoPlayer';
+import VideoCard from './components/VideoCard';
 require('firebase/firestore')
 const config = {
   apiKey: "AIzaSyA5OF2SSGffajrja4juFCrdor5zhyjo25Y",
@@ -26,12 +28,27 @@ class App extends Component {
       replyIndex: '-1',
       currentCommenter: '',
       commentList: [],
+      currentVideoTitle: '',
+      currentVideoId: '',
+      videoList: [
+          {
+              title: 'This is my overview',
+              videoId: 'QJJYpsA5tv8'
+          },
+          {
+              title: 'This is who I am',
+              videoId: 'VRPxao3e_jY'
+          },
+          {
+              title: 'This is where I am from',
+              videoId: '7JJfJgyHYwU'
+          }
+      ]
     };
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleCommenterChange = this.handleCommenterChange.bind(this);
     this.handleReplyChange = this.handleReplyChange.bind(this);
     this.submitComment = this.submitComment.bind(this);
-
   };
 
   componentDidMount() {
@@ -47,6 +64,12 @@ class App extends Component {
         }))
       });
     });
+    //set the default video
+    let newVideo = this.state.videoList[0];
+      this.setState({
+          currentVideoTitle: newVideo.title,
+          currentVideoId: newVideo.videoId,
+      })
   };
 
   handleCommentChange(event) {
@@ -66,6 +89,13 @@ class App extends Component {
       currentCommenter: event.target.value
     })
   };
+  onTabChange = (tabIndex) => {
+      let newVideo = this.state.videoList[tabIndex];
+      this.setState({
+          currentVideoTitle: newVideo.title,
+          currentVideoId: newVideo.videoId
+      })
+  }
 
   submitComment() {
     const commentListRef = db.collection('commentList');
@@ -127,39 +157,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="commentBox">
-          <article class="media">
-            <figure class="media-left">
-              <p class="image is-64x64">
-                <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
-              </p>
-            </figure>
-            <div class="media-content">
-              <div class="field">
-                <div class="control">
-                  <input class="input" type="text" placeholder="Type your name..."
-                    value={this.state.currentCommenter} onChange={this.handleCommenterChange}
-                  />
-                </div>
-              </div>
-              <div class="field">
-                <p class="control">
-                  <textarea class="textarea" placeholder="Add a comment..."
-                    value={this.state.currentComment} onChange={this.handleCommentChange}
-                  ></textarea>
-                </p>
-              </div>
-              <div class="field">
-                <p class="control">
-                  <button class="button" onClick={this.submitComment}>Post comment</button>
-                </p>
-              </div>
-            </div>
-          </article>
-        </div>
-        <div className="commentSection">
-          {
-            this.state.commentList.map((comment, commentIndex) => (
+        <Header />
+        <br/>
+        <div className="columns">
+
+          <div className="column is-7">
+            <VideoPlayer title={this.state.currentVideoTitle} videoId={this.state.currentVideoId}/>
+            <hr/>
+            <div className="commentBox">
               <article class="media">
                 <figure class="media-left">
                   <p class="image is-64x64">
@@ -167,50 +172,95 @@ class App extends Component {
                   </p>
                 </figure>
                 <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <strong>{comment.owner}</strong>
-                      <br></br>
-                      {comment.content}
-                      <br></br>
-                      <small><a onClick={this.openReplyBox.bind(this, commentIndex)}>Reply</a></small>
-                      {this.state.replyIndex.toString() === commentIndex.toString() &&
-                        <span className="replyBox">
-                          <input class="input" type="text" placeholder="Add a reply..."
-                            value={this.state.currentReply} onChange={this.handleReplyChange}
-                          />
-                          <a class="button" onClick={this.submitReply.bind(this, comment.id)}>Post</a>
-                        </span>
-                      }
+                  <div class="field">
+                    <div class="control">
+                      <input class="input" type="text" placeholder="Type your name..."
+                        value={this.state.currentCommenter} onChange={this.handleCommenterChange}
+                      />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <p class="control">
+                      <textarea class="textarea" placeholder="Add a comment..."
+                        value={this.state.currentComment} onChange={this.handleCommentChange}
+                      ></textarea>
                     </p>
                   </div>
-
-                   {comment.replyList !== undefined &&
-
-                    comment.replyList.map((reply, replyIndex) => (
-                      <article class="media">
-                        <figure class="media-left">
-                          <p class="image is-48x48">
-                            <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
-                          </p>
-                        </figure>
-                        <div class="media-content">
-                          <div class="content">
-                            <p>
-                              <strong>{reply.owner}</strong>
-                              <br></br>
-                              {reply.content}
-                            </p>
-                          </div>
-                        </div>
-                      </article>
-                    ))
-                  }
-
+                  <div class="field">
+                    <p class="control">
+                      <button class="button" onClick={this.submitComment}>Post comment</button>
+                    </p>
+                  </div>
                 </div>
               </article>
-            ))
-          }
+            </div>
+            <div className="commentSection">
+              {
+                this.state.commentList.map((comment, commentIndex) => (
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <p>
+                          <strong>{comment.owner}</strong>
+                          <br></br>
+                          {comment.content}
+                          <br></br>
+                          <small><a onClick={this.openReplyBox.bind(this, commentIndex)}>Reply</a></small>
+                          {this.state.replyIndex.toString() === commentIndex.toString() &&
+                            <span className="replyBox">
+                              <input class="input" type="text" placeholder="Add a reply..."
+                                value={this.state.currentReply} onChange={this.handleReplyChange}
+                              />
+                              <a class="button" onClick={this.submitReply.bind(this, comment.id)}>Post</a>
+                            </span>
+                          }
+                        </p>
+                      </div>
+
+                       {comment.replyList !== undefined &&
+
+                        comment.replyList.map((reply, replyIndex) => (
+                          <article class="media">
+                            <figure class="media-left">
+                              <p class="image is-48x48">
+                                <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+                              </p>
+                            </figure>
+                            <div class="media-content">
+                              <div class="content">
+                                <p>
+                                  <strong>{reply.owner}</strong>
+                                  <br></br>
+                                  {reply.content}
+                                </p>
+                              </div>
+                            </div>
+                          </article>
+                        ))
+                      }
+
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
+          </div>
+
+
+
+            <div className="column is-3">
+                {
+                    this.state.videoList.map((obj, index) => (
+                        <VideoCard key={obj.title + index} title={obj.title} index={index} onTabClick={this.onTabChange} />
+                    ))
+                }
+            </div>
+  
         </div>
       </div>
     );
