@@ -24,7 +24,7 @@ class VideoCard extends Component {
                         {/* Video Image */}
                         <div className="media-left">
                             <figure className="image is-48x48">
-                                <img src="https://bulma.io/images/placeholders/96x96.png" alt="card" />
+                                <img src="https://cdn0.iconfinder.com/data/icons/flat-green-icon-set/128/Play_Icon_FlatGreen.png" alt="card" />
                             </figure>
                         </div>
 

@@ -27,11 +27,25 @@ class VideoPlayer extends Component {
                     onReady={this.onVideoReady}
                 />
                 <p className="title is-4">{title}</p>
-                <p>My name is Quang, a Computer Science student from the National University of Singapore (NUS)</p>
-                <br></br>
-                <p>With experience in front-end web development and android game development, I am seeking for internship
-                opportunities to further expand my programming skills and to become a better software engineer.
-                </p>
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-48x48">
+                      <img src="https://avatars2.githubusercontent.com/u/29501183?s=400&u=a5d8e63293fb02fcd2880bcf8fcef2ea4a367031&v=4"/>
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <div class="content">
+                      <p>
+                        <strong>Nhat-Quang Tran</strong>
+                        <br></br>
+                        My name is Quang, a Computer Science student from the National University of Singapore (NUS)
+                        <br></br>
+                        With experience in front-end web development and android game development, I am seeking for internship
+                        opportunities to further expand my programming skills and to become a better software engineer.
+                      </p>
+                    </div>
+                  </div>
+                </article>
 
             </div>
         );

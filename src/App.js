@@ -33,7 +33,7 @@ class App extends Component {
       videoList: [
           {
               title: 'Welcome to my Online Resume',
-              videoId: 'QJJYpsA5tv8'
+              videoId: '0l__jSgTAmQ'
           },
           {
               title: 'My Experience',
@@ -170,13 +170,13 @@ class App extends Component {
               <article class="media">
                 <figure class="media-left">
                   <p class="image is-64x64">
-                    <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+                    <img src="https://www.freeiconspng.com/uploads/profile-icon-28.png"/>
                   </p>
                 </figure>
                 <div class="media-content">
                   <div class="field">
                     <div class="control">
-                      <input class="input" type="text" placeholder="Type your name..."
+                      <input class="input" type="text" placeholder="Type your name (for both commenting and replying)"
                         value={this.state.currentCommenter} onChange={this.handleCommenterChange}
                       />
                     </div>
@@ -202,7 +202,7 @@ class App extends Component {
                   <article class="media">
                     <figure class="media-left">
                       <p class="image is-64x64">
-                        <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+                        <img src="https://www.freeiconspng.com/uploads/profile-icon-28.png"/>
                       </p>
                     </figure>
                     <div class="media-content">
@@ -230,7 +230,7 @@ class App extends Component {
                           <article class="media">
                             <figure class="media-left">
                               <p class="image is-48x48">
-                                <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+                                <img src="https://www.freeiconspng.com/uploads/profile-icon-28.png"/>
                               </p>
                             </figure>
                             <div class="media-content">
