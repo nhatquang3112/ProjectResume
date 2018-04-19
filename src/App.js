@@ -40,10 +40,10 @@ class App extends Component {
           content: doc.data().content,
           owner: doc.data().owner,
           id: doc.data().id,
+          replyList: doc.data().replyList,
         }))
       });
     });
-
   };
 
   handleCommentChange(event) {
@@ -133,6 +133,29 @@ class App extends Component {
                       <small><a>Reply</a></small>
                     </p>
                   </div>
+
+                   {comment.replyList !== undefined &&
+
+                    comment.replyList.map((reply, replyIndex) => (
+                      <article class="media">
+                        <figure class="media-left">
+                          <p class="image is-48x48">
+                            <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+                          </p>
+                        </figure>
+                        <div class="media-content">
+                          <div class="content">
+                            <p>
+                              <strong>{reply.owner}</strong>
+                              <br></br>
+                              {reply.content}
+                            </p>
+                          </div>
+                        </div>
+                      </article>
+                    ))
+                  }
+
                 </div>
               </article>
             ))
