@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './bulma.css';
 import firebase from 'firebase'
 require('firebase/firestore')
 const config = {
@@ -84,14 +85,37 @@ class App extends Component {
         <h1>{this.state.currentComment}</h1>
         <h1>{this.state.currentCommenter}</h1>
 
-        <span>Change your name below</span>
-        <textarea value={this.state.currentComment} placeholder="comment" onChange={this.handleCommentChange} />
-        <textarea value={this.state.currentCommenter} placeholder="commenter" onChange={this.handleCommenterChange} />
-        <button onClick={this.submitComment}>Submit</button>
-
-        <span>Below is the comment list:</span>
-
-
+        <div className="commentSection"> 
+          <article class="media">
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img src="http://xpertlab.com/wp-content/uploads/2014/04/20151012_561baed03a54e.png"/>
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Type your name..."
+                    value={this.state.currentCommenter} onChange={this.handleCommenterChange}
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <textarea class="textarea" placeholder="Add a comment..."
+                    value={this.state.currentComment} onChange={this.handleCommentChange}
+                  ></textarea>
+                </p>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <button class="button" onClick={this.submitComment}>Post comment</button>
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
 
         {
           this.state.commentList.map((comment, commentIndex) => (
