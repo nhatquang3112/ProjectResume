@@ -22,6 +22,8 @@ class App extends Component {
     this.state = {
       name: 'Tran Nhat Quang',
       currentComment: '',
+      currentReply: '',
+      replyIndex: '-1',
       currentCommenter: '',
       commentList: [],
     };
@@ -79,6 +81,19 @@ class App extends Component {
     })
   };
 
+  submitReply(id) {
+    console.log(id);
+    this.setState({
+      replyIndex: '-1'
+    })
+  };
+
+  openReplyBox(index) {
+    this.setState({
+      replyIndex: index
+    })
+  }
+
 
   render() {
 
@@ -130,7 +145,13 @@ class App extends Component {
                       <br></br>
                       {comment.content}
                       <br></br>
-                      <small><a>Reply</a></small>
+                      <small><a onClick={this.openReplyBox.bind(this, commentIndex)}>Reply</a></small>
+                      {this.state.replyIndex.toString() === commentIndex.toString() &&
+                        <span className="replyBox">
+                          <input class="input" type="text" placeholder="Add a reply..."/>
+                          <a class="button" onClick={this.submitReply.bind(this, comment.id)}>Post</a>
+                        </span>
+                      }
                     </p>
                   </div>
 
