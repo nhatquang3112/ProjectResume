@@ -33,11 +33,11 @@ class App extends Component {
       videoList: [
           {
               title: 'Welcome to my Online Resume',
-              videoId: '0l__jSgTAmQ'
+              videoId: '6iN-DHPgFSU'
           },
           {
               title: 'My Experience',
-              videoId: 'VRPxao3e_jY'
+              videoId: 'dbuGg--MRjo'
           },
           {
               title: 'My Education at NUS',
