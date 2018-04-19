@@ -27,12 +27,12 @@
 }
 
 .commentBox {
-  width: 600px;
+  width: 815px;
   display: flex;
   flex-direction: column;
 }
 .commentSection {
-  width: 600px;
+  width: 815px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

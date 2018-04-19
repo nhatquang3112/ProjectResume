@@ -32,16 +32,16 @@ class App extends Component {
       currentVideoId: '',
       videoList: [
           {
-              title: 'This is my overview',
+              title: 'Welcome to my Online Resume',
               videoId: 'QJJYpsA5tv8'
           },
           {
-              title: 'This is who I am',
+              title: 'My Experience',
               videoId: 'VRPxao3e_jY'
           },
           {
-              title: 'This is where I am from',
-              videoId: '7JJfJgyHYwU'
+              title: 'My Education at NUS',
+              videoId: 'LuJKrTGKFpI'
           }
       ]
     };
@@ -160,6 +160,8 @@ class App extends Component {
         <Header />
         <br/>
         <div className="columns">
+          <div className="column is-1">
+          </div>
 
           <div className="column is-7">
             <VideoPlayer title={this.state.currentVideoTitle} videoId={this.state.currentVideoId}/>
@@ -254,13 +256,14 @@ class App extends Component {
 
 
             <div className="column is-3">
-                {
-                    this.state.videoList.map((obj, index) => (
-                        <VideoCard key={obj.title + index} title={obj.title} index={index} onTabClick={this.onTabChange} />
-                    ))
-                }
+              <label class="label">Playlist</label>
+              {
+                this.state.videoList.map((obj, index) => (
+                    <VideoCard key={obj.title + index} title={obj.title} index={index} onTabClick={this.onTabChange} />
+                ))
+              }
             </div>
-  
+
         </div>
       </div>
     );
