@@ -29,6 +29,7 @@ class App extends Component {
     };
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleCommenterChange = this.handleCommenterChange.bind(this);
+    this.handleReplyChange = this.handleReplyChange.bind(this);
     this.submitComment = this.submitComment.bind(this);
 
   };
@@ -54,6 +55,12 @@ class App extends Component {
     })
   };
 
+  handleReplyChange(event) {
+    this.setState({
+      currentReply: event.target.value
+    })
+  };
+
   handleCommenterChange(event) {
     this.setState({
       currentCommenter: event.target.value
@@ -69,12 +76,12 @@ class App extends Component {
         content: this.state.currentComment,
         owner: this.state.currentCommenter.length > 0 ? this.state.currentCommenter : 'Anonymous',
         id: timeCreated,
+        replyList: [],
       })
       .then(() => {
         console.log('Comment sent');
       })
     }
-
     // reset currentComment
     this.setState({
       currentComment: ''
@@ -82,7 +89,28 @@ class App extends Component {
   };
 
   submitReply(id) {
-    console.log(id);
+    // console.log(id);
+    // send reply to database
+    const commentRef = db.collection('commentList').doc(id)
+    if (this.state.currentReply.length > 0) {
+      db.runTransaction((trans) => {
+        return trans.get(commentRef).then(doc => {
+          var newReplyList = doc.data().replyList
+          newReplyList.push({
+            owner: this.state.currentCommenter.length > 0 ? this.state.currentCommenter : 'Anonymous',
+            content: this.state.currentReply,
+          });
+          // console.log(newReplyList)
+          trans.update(commentRef, {replyList: newReplyList});
+        })
+      }).then(() => {
+        console.log('Reply sent')
+        // reset replyIndex and currentReply
+        this.setState({
+          currentReply: ''
+        })
+      })
+    }
     this.setState({
       replyIndex: '-1'
     })
@@ -148,7 +176,9 @@ class App extends Component {
                       <small><a onClick={this.openReplyBox.bind(this, commentIndex)}>Reply</a></small>
                       {this.state.replyIndex.toString() === commentIndex.toString() &&
                         <span className="replyBox">
-                          <input class="input" type="text" placeholder="Add a reply..."/>
+                          <input class="input" type="text" placeholder="Add a reply..."
+                            value={this.state.currentReply} onChange={this.handleReplyChange}
+                          />
                           <a class="button" onClick={this.submitReply.bind(this, comment.id)}>Post</a>
                         </span>
                       }
